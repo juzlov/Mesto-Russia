@@ -1,6 +1,6 @@
 // класс валидации формы
 
-class FormValidator {
+export default class FormValidator {
   constructor(words) {
     this.words = words;
   }

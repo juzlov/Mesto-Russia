@@ -1,7 +1,7 @@
 
 //класс управляющий попапом для изображений
 
-class PopUpImageCard {
+export default class PopUpImageCard {
   open(event) {     
     if (event.target.classList.contains('place-card__image') === true) {
       const imageSrc = event.target.style.backgroundImage;

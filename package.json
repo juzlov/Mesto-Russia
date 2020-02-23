@@ -1,5 +1,6 @@
 {
   "name": "mesto-russia",
+  "homepage": "https://github.com/juzlov/Mesto-Russia",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
@@ -17,16 +18,19 @@
   "bugs": {
     "url": "https://github.com/juzlov/Mesto-Russia/issues"
   },
-  "homepage": "https://github.com/juzlov/Mesto-Russia#readme",
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
     "autoprefixer": "^9.7.4",
+    "babel-loader": "^8.0.6",
+    "core-js": "^3.4.1",
     "cross-env": "^7.0.0",
     "css-loader": "^3.4.2",
     "cssnano": "^4.1.10",
     "file-loader": "^5.1.0",
+    "gh-pages": "~2.2.0",
+    "html-webpack-plugin": "^3.2.0",
     "image-webpack-loader": "^6.0.0",
     "mini-css-extract-plugin": "^0.9.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
@@ -38,8 +42,7 @@
     "webpack-md5-hash": "0.0.6"
   },
   "dependencies": {
-    "babel-loader": "^8.0.6",
-    "babel-polyfill": "^6.26.0",
-    "core-js": "^3.4.1"
-  }
+    "babel-polyfill": "^6.26.0"
+  },
+  "optionalDependencies": {}
 }

@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Mesto</title>
-  <link rel="stylesheet" href="./pages/index.css">
+  <link rel="stylesheet" href="<%=htmlWebpackPlugin.files.chunks.main.css %>">
 </head>
+
 <body>
   <div class="root">
     <header class="header root__section">
-      <img src="./images/logo.svg" alt="mesto logo" class="logo">
+      <img src="<%=require('./images/logo.svg').default%>" alt="mesto logo" class="logo">
     </header>
     <div class="profile root__section">
       <div class="user-info">
@@ -27,7 +28,7 @@
     </div>
     <div class="popup popup-new">
       <div class="popup__content">
-        <img src="./images/close.svg" alt="" class="popup__close popup-new__close">
+        <img src="<%=require('./images/close.svg').default%>" alt="" class="popup__close popup-new__close">
         <h3 class="popup__title">Новое место</h3>
         <form class="popup__form" name="new">
             <input type="text" name="name" id="name" minlength="2" maxlength="30" required class="popup__input popup__input_type_name" placeholder="Название">
@@ -38,7 +39,7 @@
     </div>
     <div class="popup popup-edit">
       <div class="popup__content">
-        <img src="./images/close.svg" alt="" class="popup__close popup-edit__close">
+        <img src="<%=require('./images/close.svg').default%>" alt="" class="popup__close popup-edit__close">
         <h3 class="popup__title">Редактировать профиль</h3>
         <form class="popup__form" name="edit">
             <input type="text" name="author" id="author" minlength="2" maxlength="30" required class="popup__input popup__input_type_author-name" placeholder="Имя">
@@ -51,17 +52,14 @@
     </div>
       <div class="popup popup-image"> 
         <div class="popup__place-image">
-          <img src="./images/close.svg" alt="" class="popup__close popup-image__close">
+          <img src="<%=require('./images/close.svg').default%>" alt="" class="popup__close popup-image__close">
           <div class="popup__place-image-src"></div>
         </div>
       </div>
   </div>
   
-
-
- 
-  
-  <script src="./scripts/initialCards.js"></script>
+  <script type="module" src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"></script>
+  <!--<script src="./scripts/initialCards.js"></script>
   <script src="./scripts/Card.js"></script>
   <script src="./scripts/CardList.js"></script>
   <script src="./scripts/PopUpNewCard.js"></script>
@@ -71,8 +69,7 @@
   <script src="./scripts/FormValidator.js"></script>
   <script src="./scripts/index.js"></script>
   <script src="./scripts/Api.js"></script>
-  <script src="./scripts/script.js"></script>
-  
+  <script src="./scripts/script.js"></script>-->
 
 </body>
 </html>

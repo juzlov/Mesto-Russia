@@ -1,7 +1,7 @@
 
 // класс создания прототипа карточки с методами лайк, ремув
 
-class Card {
+export default class Card {
   constructor(name, link, likes, id, cards) {
     this.name = name;
     this.link = link;

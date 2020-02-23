@@ -1,4 +1,4 @@
-class Api {
+export default class Api {
     constructor(options, infoAboutUser, renderCard, listOfCards, iniCards) {
         this.options = options;
         this.infoAboutUser = infoAboutUser;

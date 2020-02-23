@@ -1,6 +1,6 @@
 //класс для создания листа карточек и рендера
 
-class CardList {
+export default class CardList {
   constructor(container, iniCards) {
     this.container = container;
     this.iniCards = iniCards;

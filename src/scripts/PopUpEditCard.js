@@ -1,7 +1,7 @@
 
 //класс управляющий попапом для редактирования
 
-class PopUpEditCard {
+export default class PopUpEditCard {
   constructor(errorMessage) {
     this.errorMessage = errorMessage;
   }

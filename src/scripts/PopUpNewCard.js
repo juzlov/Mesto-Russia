@@ -1,7 +1,7 @@
 
 //класс управляющий попапом для создания новой карточки
 
-class PopUpNewCard {
+export default class PopUpNewCard {
   open(event) {
     if (event.target.classList.contains('user-info__button')) {
       const newPopup = document.querySelector('.popup-new');
