@@ -1,8 +1,10 @@
+import api from './script.js';
 
 // класс создания прототипа карточки с методами лайк, ремув
+console.log(api);                                                                                                   //undefined
 
 export default class Card {
-  constructor(name, link, likes, id, cards) {
+  constructor(name, link, likes, id, cards) {                                                                     
     this.name = name;
     this.link = link;
     this.likes = likes;
@@ -45,33 +47,28 @@ export default class Card {
       const listOfPlaces = document.querySelectorAll('.place-card');
         for (let i = 0; i < listOfPlaces.length; i++) {
           if (listOfPlaces[i].contains(event.target)) {
-            api.deleteCard(initialCards[i].id);
+            api.deleteCard(initialCards[i].id);                                                                     //обращение к переменной api здесь
           }
         }
     });
-      // Надо исправить: Во первых вам надо убедиться что сервер действительно прислал результат того что  (Исправил)
-      // карточка удалена, после этого только можно удалять её с DOM
     this.placeCard.querySelector('.place-card__like-icon').addEventListener('click', function (event) {
       const listOfPlaces = document.querySelectorAll('.place-card');
 
       if (!event.target.classList.contains('place-card__like-icon_liked')) {
         for (let i = 0; i < listOfPlaces.length; i++) {
           if (listOfPlaces[i].contains(event.target)) {
-            api.likeCard(initialCards[i].id);
+            api.likeCard(initialCards[i].id);                                                                       //обращение к переменной api здесь
           }
         }
       } else {
         for (let i = 0; i < listOfPlaces.length; i++) {
           if (listOfPlaces[i].contains(event.target)) {
-            api.likeDelete(initialCards[i].id);
+            api.likeDelete(initialCards[i].id);                                                                     //обращение к переменной api здесь
           }
         }
       }
-
     });
   }
-
-
 
   remove(cardId) {
     this.cardId = cardId;

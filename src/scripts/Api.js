@@ -5,7 +5,6 @@ export default class Api {
         this.renderCard = renderCard;
         this.listOfCards = listOfCards;
         this.iniCards = iniCards;
-
     }
 
     //Загрузка информации о пользователе с сервера и смена имени на эту информацию 
@@ -16,28 +15,19 @@ export default class Api {
         })
             .then((res) => res.json())
             .then((res) => {
-                // Надо исправить: только возвращаете результат return res; , это надо удалить                        (Исправил)
                 return res;
             })
             .then((res) => {
-                this.infoAboutUser.changeNameFromServer(res.name, res.about);                                         //Можно ли так делать? Без этой строки не обновляется имя.
+                this.infoAboutUser.changeNameFromServer(res.name, res.about); 
             })
             .catch((err) => {
                 console.log(err);
             });
-        //  Надо исправить: Необходимо в метод добавить обработку ошибок                                              (Исправил)
-        //    .catch((err) => { 
-        //  	console.log(err); 
-        //  	});  
     }
 
     //Загрузка первоначальных карточек с сервера
     getInitialCards() {
 
-        //  Надо исправить: Здесь можете вызывать только метод класса Api 
-        // Но не создавать полную реализацию, а метод должен возвращать результат 
-        // который в дальнейшем вы сможете использовать в классе(Card,CardList,Popup ...)                           (Исправил)
-        // 
         fetch((this.options.baseUrl + '/cards'), {
             method: 'GET',
             headers: this.options.headers
@@ -46,18 +36,12 @@ export default class Api {
                 return res.json();
             })
             .then((result) => {
-                // Это должно быть в CardList, для этого мы и создавали класс и методы  
-                // Вызовите getInitialCards() из класса CardList и обработайте там результат(как вариант)           (Исправил)
                 this.listOfCards.getInitialCards(result);
                 this.listOfCards.render(this.renderCard);
             })
             .catch((err) => {
                 console.log(err);
             });
-        //  Надо исправить: Необходимо в метод добавить обработку ошибок                                            (Исправил)
-        //    .catch((err) => { 
-        //  	console.log(err); 
-        //  	});  
     }
 
     //заготовка для смены моей аватарки на сервере (Не должно работать)
@@ -73,10 +57,6 @@ export default class Api {
             .catch((err) => {
                 console.log(err);
             });
-        //  Надо исправить: Необходимо в метод добавить обработку ошибок                                           (Исправил)
-        //    .catch((err) => { 
-        //  	console.log(err); 
-        //  	});  
     }
 
     //смена имени и О себе на сервере
@@ -91,20 +71,11 @@ export default class Api {
         })
             .then((res) => res.json())
             .then(() => {
-                /** Надо исправить: вы обращаетесь в классе к переменной объявленной глобально,                     (Исправил)
-                так делать нельзя. Вы можете передать эту переменную в качестве параметров, а потом уже обращаться к ней 
-                Стремитесь к тому чтобы класс у вас был самодостаточным, и не зависел от глобальных переменных или классов 
-                объявленных глобально, а только от тех данных которые были переданны через параметры 
-                */
                 this.getNameFromServer();
             })
             .catch((err) => {
                 console.log(err);
             });
-        //  Надо исправить: Необходимо в метод добавить обработку ошибок                                            (Исправил)
-        //    .catch((err) => { 
-        //  	console.log(err); 
-        //  	});  
     }
 
     // добавление новой карточки
@@ -131,13 +102,9 @@ export default class Api {
             .catch((err) => {
                 console.log(err);
             });
-        //  Надо исправить: Необходимо в метод добавить обработку ошибок                                          (Исправил)
-        //    .catch((err) => { 
-        //  	console.log(err); 
-        //  	});  
     }
 
-    // заготовка для удаления карточки
+    //удаление карточки
     deleteCard(cardId) {
         fetch((this.options.baseUrl + '/cards/' + cardId), {
             method: 'DELETE',
@@ -155,10 +122,6 @@ export default class Api {
             .catch((err) => {
                 console.log(err);
             });
-        //  Надо исправить: Необходимо в метод добавить обработку ошибок                                        (Исправил)
-        //    .catch((err) => { 
-        //  	console.log(err); 
-        //  	});  
     }
 
     // постановка лайка
