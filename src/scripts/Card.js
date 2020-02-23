@@ -1,7 +1,6 @@
-import api from './script.js';
-
-// класс создания прототипа карточки с методами лайк, ремув
-console.log(api);                                                                                                   //undefined
+import {api} from './script.js';
+console.log(api); 
+// класс создания прототипа карточки с методами лайк, ремув                                                                                        //undefined
 
 export default class Card {
   constructor(name, link, likes, id, cards) {                                                                     

@@ -51,6 +51,7 @@ export const api = new Api({                                                    
     }
 }, userinfo, renderCard, cardlist, initialCards) ;
 
+
 api.getNameFromServer();
 api.getInitialCards();
 
