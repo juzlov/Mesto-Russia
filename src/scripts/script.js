@@ -10,10 +10,6 @@ import UserInfo from './UserInfo.js';
 import '../pages/index.css';
 import {placeButtonDisabler, editButtonDisabler, changeName, formDefault} from './index.js';
 
-
-
-
-
 const placesList = document.querySelector('.places-list');
 const userInfoButton = document.querySelector('.user-info__button');
 const userInfoButtonEdit = document.querySelector('.user-info__button_edit');
@@ -28,32 +24,26 @@ const errorMessages = {
 'length': 'Должно быть от 2 до 30 символов'
 }
 const initialCards = [];
-let userInfoName = document.querySelector('.user-info__name').innerHTML;
-let userInfoAbout = document.querySelector('.user-info__job').innerHTML;
-const popupImage = document.querySelector('.popup-image');
-const popupPlaceImageSrc = document.querySelector('.popup__place-image-src');
 
 const userinfo = new UserInfo(author.value, about.value);
-const renderCard = new Card('', '', '', '', initialCards);
-const cardlist = new CardList(placesList, initialCards);
 const imagecard = new PopUpImageCard;
 const newcard = new PopUpNewCard;
 const validation = new FormValidator(errorMessages); 
 const popupEditCard = new PopUpEditCard(validation); 
 
-
-
-export const api = new Api({                                                                                //объявление экспорта переменной api
+export const api = new Api({                                                                              
     baseUrl: 'http://95.216.175.5/cohort7',
     headers: {
     authorization: '0c961df6-89b0-435f-8c24-258dd9cf0d90',
     'Content-Type': 'application/json'
     }
-}, userinfo, renderCard, cardlist, initialCards) ;
+}, userinfo,  initialCards) ; //renderCard,
 
+const renderCard = new Card('', '', '', '', initialCards, api);
+const cardlist = new CardList(placesList, initialCards, api, renderCard);
 
 api.getNameFromServer();
-api.getInitialCards();
+cardlist.getInitialCards();
 
 const popupNew = document.querySelector('.popup-new');
 const popupEdit = document.querySelector('.popup-edit');
@@ -76,7 +66,7 @@ popupEditButton.addEventListener('click', function (event) {
 popupNewButton.addEventListener('click', function (event) {
     event.preventDefault();
 
-    api.addNewCard(document.forms.new.name.value, document.forms.new.link.value);
+    cardlist.addNewCard(document.forms.new.name.value, document.forms.new.link.value);
     popupNew.classList.toggle('popup_is-opened');
 });
 

@@ -1,14 +1,13 @@
-import {api} from './script.js';
-console.log(api); 
-// класс создания прототипа карточки с методами лайк, ремув                                                                                        //undefined
-
+// класс создания прототипа карточки с методами лайк, ремув                                                                                    
 export default class Card {
-  constructor(name, link, likes, id, cards) {                                                                     
+  constructor(name, link, likes, id, cards, api) {                                                                     
     this.name = name;
     this.link = link;
     this.likes = likes;
     this.id = id;
     this.cards = cards;
+    this.api = api;
+
   }
 
   like(result, idCard) {
@@ -42,27 +41,67 @@ export default class Card {
   }
 
   setEventListener() {
+    let api = this.api;
+    let id = this.id;
+    let thiscard = this;
     this.placeCard.querySelector('.place-card__delete-icon').addEventListener('click', function (event) {
       const listOfPlaces = document.querySelectorAll('.place-card');
-        for (let i = 0; i < listOfPlaces.length; i++) {
-          if (listOfPlaces[i].contains(event.target)) {
-            api.deleteCard(initialCards[i].id);                                                                     //обращение к переменной api здесь
+      api.deleteCard(id)
+      .then((res) => {
+          if(res.ok) {
+            return res.json();
+          } else {
+            return Promise.reject(err);
           }
-        }
+        }).then((res) => {
+            if (res.message === "Пост удалён") {
+              
+              for (let i = 0; i < listOfPlaces.length; i++) {
+                if (listOfPlaces[i].contains(event.target)) {
+                  thiscard.remove(id);                                                                 
+                }
+              }  
+            }
+          })
     });
+
     this.placeCard.querySelector('.place-card__like-icon').addEventListener('click', function (event) {
       const listOfPlaces = document.querySelectorAll('.place-card');
-
+      
       if (!event.target.classList.contains('place-card__like-icon_liked')) {
         for (let i = 0; i < listOfPlaces.length; i++) {
           if (listOfPlaces[i].contains(event.target)) {
-            api.likeCard(initialCards[i].id);                                                                       //обращение к переменной api здесь
+            api.likeCard(id)
+              .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                }
+                }).then((res) => {
+                    return res.likes.length;
+                }).then((res) => {
+                    thiscard.like(res, id);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
           }
         }
       } else {
         for (let i = 0; i < listOfPlaces.length; i++) {
           if (listOfPlaces[i].contains(event.target)) {
-            api.likeDelete(initialCards[i].id);                                                                     //обращение к переменной api здесь
+            api.likeDelete(id)
+              .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                }
+                }).then((res) => {
+                    return res.likes.length;
+                }).then((res) => {
+                    thiscard.likeDelete(res, id);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
           }
         }
       }

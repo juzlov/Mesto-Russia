@@ -1,9 +1,11 @@
 //класс для создания листа карточек и рендера
 
 export default class CardList {
-  constructor(container, iniCards) {
+  constructor(container, iniCards, api, renderCard) {
     this.container = container;
     this.iniCards = iniCards;
+    this.api = api;
+    this.renderCard = renderCard;
   }
 
   addCard(card) {
@@ -22,26 +24,34 @@ export default class CardList {
     });
   }
 
-  getInitialCards(result) {
-    /* 
-     можно лучше : используйте for of для перебора массива с объектами
-     https: //developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of 
-     как пример:
-     
-     const array1 = ['a', 'b', 'c'];
-     for (const element of array1) {
-      console.log(element);
-     }
-     
-    */
-    for (let i = 0; i < result.length; i++) {
-      const initialCard = {};
-      initialCard.name = result[i].name;
-      initialCard.link = result[i].link;
-      initialCard.likes = result[i].likes.length;
-      initialCard.id = result[i]._id;
-      this.iniCards.push(initialCard);
-    }
+  getInitialCards() {
+    this.api.getInitialCards()
+    .then((res) => {
+      if(res.ok) {
+        return res.json();
+      } else {
+        return Promise.reject(err);
+      };
+    })
+        .then((result) => {
+              for (let i = 0; i < result.length; i++) {
+                const initialCard = {};
+                initialCard.name = result[i].name;
+                initialCard.link = result[i].link;
+                initialCard.likes = result[i].likes.length;
+                initialCard.id = result[i]._id;
+                this.iniCards.push(initialCard);
+          }
+          this.render(this.renderCard); 
+        })
+        .catch((err) => {
+            console.log(err);
+        });      
+  }
+
+  addNewCard(name, link) {
+    this.api.addNewCard(name, link);
+    this.addCard(this.renderCard);
   }
 }
 
