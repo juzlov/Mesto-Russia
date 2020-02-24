@@ -1,9 +1,7 @@
 export default class Api {
-    constructor(options, infoAboutUser, renderCard, listOfCards, iniCards) {
+    constructor(options, infoAboutUser, iniCards) {
         this.options = options;
         this.infoAboutUser = infoAboutUser;
-        this.renderCard = renderCard;
-        this.listOfCards = listOfCards;
         this.iniCards = iniCards;
     }
 
@@ -27,21 +25,10 @@ export default class Api {
 
     //Загрузка первоначальных карточек с сервера
     getInitialCards() {
-
-        fetch((this.options.baseUrl + '/cards'), {
+       return fetch((this.options.baseUrl + '/cards'), {
             method: 'GET',
             headers: this.options.headers
         })
-            .then((res) => {
-                return res.json();
-            })
-            .then((result) => {
-                this.listOfCards.getInitialCards(result);
-                this.listOfCards.render(this.renderCard);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
     }
 
     //заготовка для смены моей аватарки на сервере (Не должно работать)
@@ -80,7 +67,7 @@ export default class Api {
 
     // добавление новой карточки
     addNewCard(name, link) {
-        fetch((this.options.baseUrl + '/cards'), {
+        return fetch((this.options.baseUrl + '/cards'), {
             method: 'POST',
             headers: this.options.headers,
             body: JSON.stringify(
@@ -89,79 +76,31 @@ export default class Api {
                     "link": `${link}`
                 })
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-            })
-            .then((res) => {
-                this.renderCard.name = name;
-                this.renderCard.link = link;
-                this.listOfCards.addCard(this.renderCard);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
     }
 
     //удаление карточки
     deleteCard(cardId) {
-        fetch((this.options.baseUrl + '/cards/' + cardId), {
+       return fetch((this.options.baseUrl + '/cards/' + cardId), {
             method: 'DELETE',
             headers: this.options.headers
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-            }).then((res) => {
-                if (res.message === "Пост удалён") {
-                    this.renderCard.remove(cardId);
-                };
-            })
-            .catch((err) => {
-                console.log(err);
-            });
     }
 
     // постановка лайка
     likeCard(cardId) {
-        fetch((this.options.baseUrl + '/cards/like/' + cardId), {
+        return fetch((this.options.baseUrl + '/cards/like/' + cardId), {
             method: 'PUT',
             headers: this.options.headers
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-            }).then((res) => {
-                return res.likes.length;
-            }).then((res) => {
-                this.renderCard.like(res, cardId);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        
     }
 
     //снятие лайка
     likeDelete(cardId) {
-        fetch((this.options.baseUrl + '/cards/like/' + cardId), {
+        return fetch((this.options.baseUrl + '/cards/like/' + cardId), {
             method: 'DELETE',
             headers: this.options.headers
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-            }).then((res) => {
-                return res.likes.length;
-            }).then((res) => {
-                this.renderCard.likeDelete(res, cardId);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
     }
 }
 

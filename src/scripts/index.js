@@ -50,6 +50,7 @@
     let authorDefault = document.querySelector('.user-info__name').innerHTML;
     author.value = authorDefault;
 
+
     let about = document.querySelector('.popup__input_type_about');
     let aboutDefault = document.querySelector('.user-info__job').innerHTML;
     about.value = aboutDefault;
