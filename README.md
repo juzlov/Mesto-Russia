@@ -12,5 +12,34 @@ HTML, CSS, JS, Webpack
 ## Ссылка на проект
 https://juzlov.github.io/Mesto-Russia/
 
+## Как установить?
+npm version - 6.13.4
+node.js version - 12.16.1
+
+Клонирование проекта:
+```
+git clone https://github.com/juzlov/Mesto-Russia.git
+```
+
+Установка зависимостей:
+```
+npm install
+```
+
+Создание локального сервера:
+```
+npm run dev
+```
+
+Сборка текущей версии:
+```
+npm run build
+```
+
+Деплой на Github Pages:
+```
+npm run deploy
+```
+
 ## Версия
-1.0.0
+1.1.0
