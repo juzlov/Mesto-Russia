@@ -1,13 +1,14 @@
 export default class Api {
-    constructor(options, infoAboutUser, iniCards) {
+    constructor(options, infoAboutUser, iniCards, serverUrl) {
         this.options = options;
         this.infoAboutUser = infoAboutUser;
         this.iniCards = iniCards;
+        this.serverUrl = serverUrl;
     }
 
     //Загрузка информации о пользователе с сервера и смена имени на эту информацию 
     getNameFromServer() {
-        fetch((this.options.baseUrl + '/users/me'), {
+        fetch((this.serverUrl + this.options.baseUrl + '/users/me'), {
             method: 'GET',
             headers: this.options.headers
         })
@@ -25,7 +26,7 @@ export default class Api {
 
     //Загрузка первоначальных карточек с сервера
     getInitialCards() {
-       return fetch((this.options.baseUrl + '/cards'), {
+       return fetch((this.serverUrl + this.options.baseUrl + '/cards'), {
             method: 'GET',
             headers: this.options.headers
         })
@@ -33,7 +34,7 @@ export default class Api {
 
     //заготовка для смены моей аватарки на сервере (Не должно работать)
     changeAvatar() {
-        fetch((this.options.baseUrl + 'users/me/avatar'), {
+        fetch((this.serverUrl + this.options.baseUrl + 'users/me/avatar'), {
             method: 'PATCH',
             headers: this.options.headers,
             body: JSON.stringify({
@@ -48,7 +49,7 @@ export default class Api {
 
     //смена имени и О себе на сервере
     changeServerName(name, about) {
-        fetch((this.options.baseUrl + '/users/me'), {
+        fetch((this.serverUrl + this.options.baseUrl + '/users/me'), {
             method: 'PATCH',
             headers: this.options.headers,
             body: JSON.stringify({
@@ -67,7 +68,7 @@ export default class Api {
 
     // добавление новой карточки
     addNewCard(name, link) {
-        return fetch((this.options.baseUrl + '/cards'), {
+        return fetch((this.serverUrl + this.options.baseUrl + '/cards'), {
             method: 'POST',
             headers: this.options.headers,
             body: JSON.stringify(
@@ -80,7 +81,7 @@ export default class Api {
 
     //удаление карточки
     deleteCard(cardId) {
-       return fetch((this.options.baseUrl + '/cards/' + cardId), {
+       return fetch((this.serverUrl + this.options.baseUrl + '/cards/' + cardId), {
             method: 'DELETE',
             headers: this.options.headers
         })
@@ -88,7 +89,7 @@ export default class Api {
 
     // постановка лайка
     likeCard(cardId) {
-        return fetch((this.options.baseUrl + '/cards/like/' + cardId), {
+        return fetch((this.serverUrl + this.options.baseUrl + '/cards/like/' + cardId), {
             method: 'PUT',
             headers: this.options.headers
         })
@@ -97,7 +98,7 @@ export default class Api {
 
     //снятие лайка
     likeDelete(cardId) {
-        return fetch((this.options.baseUrl + '/cards/like/' + cardId), {
+        return fetch((this.serverUrl + this.options.baseUrl + '/cards/like/' + cardId), {
             method: 'DELETE',
             headers: this.options.headers
         })
