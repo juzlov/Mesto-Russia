@@ -31,13 +31,15 @@ const newcard = new PopUpNewCard;
 const validation = new FormValidator(errorMessages); 
 const popupEditCard = new PopUpEditCard(validation); 
 
+const serverUrl = NODE_ENV === 'development' ? 'http' : 'https';
+
 export const api = new Api({                                                                              
-    baseUrl: 'http://95.216.175.5/cohort7',
+    baseUrl: '://praktikum.tk/cohort7',
     headers: {
     authorization: '0c961df6-89b0-435f-8c24-258dd9cf0d90',
     'Content-Type': 'application/json'
     }
-}, userinfo,  initialCards) ; //renderCard,
+}, userinfo,  initialCards, serverUrl) ; 
 
 const renderCard = new Card('', '', '', '', initialCards, api);
 const cardlist = new CardList(placesList, initialCards, api, renderCard);
