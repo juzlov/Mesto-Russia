@@ -11,7 +11,7 @@ module.exports = {
     main: './src/scripts/script.js'
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'public'),
     filename: '[name].[chunkhash].js'
   },
   module: {
@@ -43,7 +43,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new MiniCssExtractPlugin({ // 
+    new MiniCssExtractPlugin({ //
       filename: 'style.[contenthash].css',
     }),
     new OptimizeCssAssetsPlugin({

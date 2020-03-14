@@ -28,18 +28,18 @@ const initialCards = [];
 const userinfo = new UserInfo(author.value, about.value);
 const imagecard = new PopUpImageCard;
 const newcard = new PopUpNewCard;
-const validation = new FormValidator(errorMessages); 
-const popupEditCard = new PopUpEditCard(validation); 
+const validation = new FormValidator(errorMessages);
+const popupEditCard = new PopUpEditCard(validation);
 
-const serverUrl = NODE_ENV === 'development' ? 'http' : 'https';
+const serverUrl = NODE_ENV === 'development' ? 'http' : 'http';
 
-export const api = new Api({                                                                              
-    baseUrl: '://praktikum.tk/cohort7',
+export const api = new Api({
+    baseUrl: '://localhost:3000',
     headers: {
     authorization: '0c961df6-89b0-435f-8c24-258dd9cf0d90',
     'Content-Type': 'application/json'
     }
-}, userinfo,  initialCards, serverUrl) ; 
+}, userinfo,  initialCards, serverUrl) ;
 
 const renderCard = new Card('', '', '', '', initialCards, api);
 const cardlist = new CardList(placesList, initialCards, api, renderCard);
@@ -59,11 +59,11 @@ popupEditButton.addEventListener('click', function (event) {
     event.preventDefault();
     const nameTyped = document.querySelector('.popup__input_type_author-name');
     const aboutTyped = document.querySelector('.popup__input_type_about');
-  
+
     api.changeServerName(nameTyped.value, aboutTyped.value);
     popupEdit.classList.toggle('popup_is-opened');
   });
-  
+
 //слушатель для кнопки создания новой карточки
 popupNewButton.addEventListener('click', function (event) {
     event.preventDefault();
@@ -76,7 +76,7 @@ popupNewButton.addEventListener('click', function (event) {
 author.addEventListener('input', function() {
     popupEditCard.validateName(validation);
 });
-    
+
 about.addEventListener('input', function() {
     popupEditCard.validateAbout(validation);
 });
