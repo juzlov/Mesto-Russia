@@ -1,5 +1,9 @@
+/* eslint-disable import/no-dynamic-require */
+const path = require('path');
+
 const router = require('express').Router();
-const users = require('../data/users');
+
+const users = require((path.join(__dirname, '../data', 'users.json')));
 
 router.get('/', (req, res) => {
   res.send(users);
