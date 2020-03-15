@@ -2,7 +2,7 @@
   "name": "mesto-russia",
   "homepage": "https://github.com/juzlov/Mesto-Russia",
   "version": "0.0.1",
-  "description": "",
+  "description": "Developed local server with API and authentication",
   "main": "index.js",
   "scripts": {
     "build": "rimraf public && cross-env NODE_ENV=production webpack --mode production",
