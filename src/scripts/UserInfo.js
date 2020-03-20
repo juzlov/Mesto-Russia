@@ -1,5 +1,9 @@
+/* eslint-disable no-sequences */
+/* eslint-disable no-const-assign */
+/* eslint-disable no-undef */
+/* eslint-disable class-methods-use-this */
 
-//класс хранящий данные пользователя и изменяющий их
+// класс хранящий данные пользователя и изменяющий их
 
 export default class UserInfo {
   constructor(name, about) {
@@ -23,26 +27,26 @@ export default class UserInfo {
     editPopup.classList.toggle('popup_is-opened');
   }
 
-  changeNameAndValue (name, about) {
-      const userName = document.querySelector('.user-info__name').textContent;
-      const userAbout = document.querySelector('.user-info__job').textContent;
+  changeNameAndValue(name, about) {
+    const userName = document.querySelector('.user-info__name').textContent;
+    const userAbout = document.querySelector('.user-info__job').textContent;
 
-      userName = name;
-      userAbout = about;
-      
-      return userName, userAbout;
+    userName = name;
+    userAbout = about;
+
+    return userName, userAbout;
   }
 
   changeNameFromServer(name, about) {
-      this.name = name;
-      this.about = about;
+    this.name = name;
+    this.about = about;
 
-      const userName = document.querySelector('.user-info__name');
-      const userAbout = document.querySelector('.user-info__job');
+    const userName = document.querySelector('.user-info__name');
+    const userAbout = document.querySelector('.user-info__job');
 
-      userName.textContent = this.name;
-      userAbout.textContent = this.about;
+    userName.textContent = this.name;
+    userAbout.textContent = this.about;
 
-      return userName, userAbout;
+    return userName, userAbout;
   }
 }

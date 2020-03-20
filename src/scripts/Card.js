@@ -1,3 +1,7 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-undef */
+/* eslint-disable no-plusplus */
+/* eslint-disable no-console */
 // класс создания прототипа карточки с методами лайк, ремув
 export default class Card {
   constructor(name, link, likes, id, cards, api) {

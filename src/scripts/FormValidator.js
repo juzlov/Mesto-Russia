@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 // класс валидации формы
 
 export default class FormValidator {
@@ -7,8 +8,8 @@ export default class FormValidator {
 
   length(element) {
     this.resetError(element);
-    
-    if (element.validity.tooShort || element.validity.valueMissing ) {
+
+    if (element.validity.tooShort || element.validity.valueMissing) {
       const errorElement = document.querySelector(`#error-${element.id}`);
       element.classList.add('input-container__invalid');
       errorElement.textContent = 'Значение слишком короткое';

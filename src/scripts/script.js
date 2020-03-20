@@ -1,3 +1,8 @@
+/* eslint-disable no-restricted-globals */
+/* eslint-disable import/prefer-default-export */
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
+/* eslint-disable import/extensions */
 
 import Api from './Api.js';
 import Card from './Card.js';
@@ -8,7 +13,9 @@ import PopUpImageCard from './PopUpImageCard.js';
 import PopUpNewCard from './PopUpNewCard.js';
 import UserInfo from './UserInfo.js';
 import '../pages/index.css';
-import {placeButtonDisabler, editButtonDisabler, changeName, formDefault} from './index.js';
+import {
+  placeButtonDisabler, editButtonDisabler, changeName, formDefault,
+} from './index.js';
 
 const placesList = document.querySelector('.places-list');
 const userInfoButton = document.querySelector('.user-info__button');
@@ -19,27 +26,27 @@ const popupCloseImage = document.querySelector('.popup-image__close');
 const author = document.querySelector('#author');
 const about = document.querySelector('#about');
 const errorMessages = {
-'author': 'Это обязательное поле',
-'about': 'Это обязательное поле',
-'length': 'Должно быть от 2 до 30 символов'
-}
+  author: 'Это обязательное поле',
+  about: 'Это обязательное поле',
+  length: 'Должно быть от 2 до 30 символов',
+};
 const initialCards = [];
 
 const userinfo = new UserInfo(author.value, about.value);
-const imagecard = new PopUpImageCard;
-const newcard = new PopUpNewCard;
+const imagecard = new PopUpImageCard();
+const newcard = new PopUpNewCard();
 const validation = new FormValidator(errorMessages);
 const popupEditCard = new PopUpEditCard(validation);
 
 const serverUrl = NODE_ENV === 'development' ? 'http' : 'http';
 
 export const api = new Api({
-    baseUrl: '://localhost:3000',
-    headers: {
+  baseUrl: '://localhost:3000',
+  headers: {
     authorization: '0c961df6-89b0-435f-8c24-258dd9cf0d90',
-    'Content-Type': 'application/json'
-    }
-}, userinfo,  initialCards, serverUrl) ;
+    'Content-Type': 'application/json',
+  },
+}, userinfo, initialCards, serverUrl);
 
 const renderCard = new Card('', '', '', '', initialCards, api);
 const cardlist = new CardList(placesList, initialCards, api, renderCard);
@@ -54,31 +61,31 @@ const popupNewButton = document.querySelector('.popup-new__button');
 const popupEditButton = document.querySelector('.popup-edit__button');
 
 
-//слушатель для кнопки редактирования карточки
-popupEditButton.addEventListener('click', function (event) {
-    event.preventDefault();
-    const nameTyped = document.querySelector('.popup__input_type_author-name');
-    const aboutTyped = document.querySelector('.popup__input_type_about');
+// слушатель для кнопки редактирования карточки
+popupEditButton.addEventListener('click', (event) => {
+  event.preventDefault();
+  const nameTyped = document.querySelector('.popup__input_type_author-name');
+  const aboutTyped = document.querySelector('.popup__input_type_about');
 
-    api.changeServerName(nameTyped.value, aboutTyped.value);
-    popupEdit.classList.toggle('popup_is-opened');
-  });
+  api.changeServerName(nameTyped.value, aboutTyped.value);
+  popupEdit.classList.toggle('popup_is-opened');
+});
 
-//слушатель для кнопки создания новой карточки
-popupNewButton.addEventListener('click', function (event) {
-    event.preventDefault();
+// слушатель для кнопки создания новой карточки
+popupNewButton.addEventListener('click', (event) => {
+  event.preventDefault();
 
-    cardlist.addNewCard(document.forms.new.name.value, document.forms.new.link.value);
-    popupNew.classList.toggle('popup_is-opened');
+  cardlist.addNewCard(document.forms.new.name.value, document.forms.new.link.value);
+  popupNew.classList.toggle('popup_is-opened');
 });
 
 
-author.addEventListener('input', function() {
-    popupEditCard.validateName(validation);
+author.addEventListener('input', () => {
+  popupEditCard.validateName(validation);
 });
 
-about.addEventListener('input', function() {
-    popupEditCard.validateAbout(validation);
+about.addEventListener('input', () => {
+  popupEditCard.validateAbout(validation);
 });
 
 placesList.addEventListener('click', imagecard.open);
@@ -93,9 +100,3 @@ popupCloseEdit.addEventListener('click', popupEditCard.close);
 placeButtonDisabler(event);
 editButtonDisabler();
 formDefault();
-
-
-
-
-
-

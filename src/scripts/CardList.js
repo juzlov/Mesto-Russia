@@ -1,3 +1,8 @@
+/* eslint-disable no-console */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-plusplus */
+/* eslint-disable no-undef */
+/* eslint-disable no-param-reassign */
 // класс для создания листа карточек и рендера
 
 export default class CardList {

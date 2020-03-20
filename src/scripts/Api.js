@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable no-console */
 export default class Api {
   constructor(options, infoAboutUser, iniCards, serverUrl) {
     this.options = options;

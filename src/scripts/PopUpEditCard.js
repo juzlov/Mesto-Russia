@@ -1,5 +1,7 @@
+/* eslint-disable no-restricted-globals */
+/* eslint-disable class-methods-use-this */
 
-//класс управляющий попапом для редактирования
+// класс управляющий попапом для редактирования
 
 export default class PopUpEditCard {
   constructor(errorMessage) {
@@ -8,7 +10,7 @@ export default class PopUpEditCard {
 
   validateName() {
     const author = document.querySelector('#author');
-    this.errorMessage.length(author);                                                        
+    this.errorMessage.length(author);
   }
 
   validateAbout() {

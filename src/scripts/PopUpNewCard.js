@@ -1,5 +1,6 @@
+/* eslint-disable class-methods-use-this */
 
-//класс управляющий попапом для создания новой карточки
+// класс управляющий попапом для создания новой карточки
 
 export default class PopUpNewCard {
   open(event) {
