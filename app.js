@@ -1,12 +1,11 @@
 const express = require('express');
-const path = require('path');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const users = require('./routes/users');
 const cards = require('./routes/cards');
-const middleware = require('./middleware/middleware');
-
 
 const { PORT = 3000 } = process.env;
+
 const app = express();
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {
@@ -15,13 +14,17 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useFindAndModify: false,
 });
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use((req, res, next) => {
+  req.user = {
+    _id: '5e8e0b7dbacbec378c0f4247',
+  };
+  next();
+});
 
 app.use('/users', users);
 app.use('/cards', cards);
-app.use(middleware);
 
-app.listen(PORT, () => {
-  // eslint-disable-next-line no-console
-  console.log(`Server started at ${PORT}`);
-});
+app.listen(PORT);
