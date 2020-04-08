@@ -2,12 +2,13 @@
   "name": "mesto-russia",
   "homepage": "https://github.com/juzlov/Mesto-Russia",
   "version": "0.0.1",
-  "description": "",
+  "description": "Developed local server with API and authentication",
   "main": "index.js",
   "scripts": {
-    "build": "cross-env NODE_ENV=production rimraf dist && webpack --mode production",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --mode development --open --watch",
-    "deploy": "cross-env NODE_ENV=production gh-pages -d dist"
+    "build": "rimraf public && cross-env NODE_ENV=production webpack --mode production",
+    "deploy": "cross-env NODE_ENV=production gh-pages -d public",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -24,10 +25,14 @@
     "@babel/preset-env": "^7.8.4",
     "autoprefixer": "^9.7.4",
     "babel-loader": "^8.0.6",
+    "body-parser": "^1.19.0",
     "core-js": "^3.4.1",
     "cross-env": "^7.0.0",
     "css-loader": "^3.4.2",
     "cssnano": "^4.1.10",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
     "file-loader": "^5.1.0",
     "gh-pages": "~2.2.0",
     "html-webpack-plugin": "^3.2.0",
@@ -42,7 +47,9 @@
     "webpack-md5-hash": "0.0.6"
   },
   "dependencies": {
-    "babel-polyfill": "^6.26.0"
+    "babel-polyfill": "^6.26.0",
+    "express-validator": "^6.4.0",
+    "mongoose": "^5.9.7"
   },
   "optionalDependencies": {}
 }
