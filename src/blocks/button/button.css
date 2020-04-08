@@ -1,0 +1,12 @@
+.button {
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+  display: block;
+  cursor: pointer;
+  font-family: Inter;
+}
+
+.button:focus {
+  outline-color: greenyellow;
+}

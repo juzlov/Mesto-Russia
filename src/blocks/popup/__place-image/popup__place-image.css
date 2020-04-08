@@ -1,0 +1,9 @@
+.popup__place-image {
+  width: 1000px;
+  height: 1000px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  max-height: 80vh; 
+  max-width: 80vw;
+  position: relative;
+}
