@@ -2,6 +2,7 @@ const Card = require('../models/card');
 
 module.exports.getCards = (req, res) => {
   Card.find({})
+    .populate('owner')
     .then((cards) => {
       if (!cards) {
         res.status(404).send({ message: 'no cards were found' });
@@ -20,7 +21,13 @@ module.exports.addCard = (req, res) => {
 };
 
 module.exports.removeCard = (req, res) => {
-  Card.findByIdAndRemove(req.params.cardId)
-    .then((card) => res.status(200).send({ data: card }))
+  Card.findById(req.params.cardId)
+    .then((card) => {
+      if (!card) {
+        res.status(404).send({ message: 'no cards with this id' });
+      }
+      return Card.findByIdAndDelete(req.params.cardId)
+        .then((cards) => res.status(200).send({ data: cards }));
+    })
     .catch((err) => res.status(500).send({ message: err.message }));
 };
