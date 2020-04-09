@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
   avatar: {
     required: true,
     type: String,
-    validate: async function typeValidate(url) {
+    validate: function typeValidate(url) {
       return validator.isURL(url);
     },
   },
