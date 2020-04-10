@@ -1,4 +1,6 @@
+const bcrypt = require('bcryptjs');
 const User = require('../models/user');
+
 
 module.exports.getUsers = (req, res) => {
   User.find({})
@@ -25,8 +27,22 @@ module.exports.getUserById = (req, res) => {
 };
 
 module.exports.addUser = (req, res) => {
-  const { name, about, avatar } = req.body;
-  User.create({ name, about, avatar })
-    .then((user) => res.status(200).send({ data: user }))
+  const {
+    name, about, avatar, email, password,
+  } = req.body;
+
+  User.find({ email })
+    .then((mail) => {
+      if (mail) {
+        res.status(404).send({ message: 'Email already registred' });
+      }
+      return bcrypt.hash(password, 10)
+        .then((hash) => User.create({
+          name, about, email, password: hash, avatar,
+        }))
+        .then((user) => res.send({
+          name: user.name, about: user.about, email: user.email, avatar: user.avatar,
+        }));
+    })
     .catch((err) => res.status(500).send({ message: err.message }));
 };
