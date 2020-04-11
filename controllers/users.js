@@ -53,10 +53,10 @@ module.exports.addUser = (req, res) => {
 
 module.exports.login = (req, res) => {
   const { email, password } = req.body;
-  User.findUserByCredentials(email, password)
+  return User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, JWT_SECRET);
-      res.cookie('jwt', token, { maxAge: 3600000 * 24 * 7, httpOnly: true }).end();
+      res.cookie('jwt', token, { maxAge: 3600000 * 24 * 7, httpOnly: true }).send();
     })
     .catch((err) => res.status(500).send({ message: err.message }));
 };

@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const users = require('./routes/users');
 const cards = require('./routes/cards');
 const { login, addUser } = require('./controllers/users');
@@ -14,16 +15,17 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
+  useUnifiedTopology: true,
 });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 app.post('/signin', login);
 app.post('/signup', addUser);
 
-app.use(auth);
-app.use('/users', users);
-app.use('/cards', cards);
+app.use('/users', auth, users);
+app.use('/cards', auth, cards);
 
 app.listen(PORT);
