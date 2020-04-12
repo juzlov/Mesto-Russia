@@ -36,17 +36,19 @@ module.exports.addUser = (req, res) => {
   } = req.body;
 
   User.find({ email })
+    // eslint-disable-next-line consistent-return
     .then((mail) => {
-      if (mail) {
+      if (mail.length !== 0) {
         res.status(404).send({ message: 'Email already registred' });
+      } else {
+        return bcrypt.hash(password, 10)
+          .then((hash) => User.create({
+            name, about, email, password: hash, avatar,
+          }))
+          .then((user) => res.send({
+            name: user.name, about: user.about, email: user.email, avatar: user.avatar,
+          }));
       }
-      return bcrypt.hash(password, 10)
-        .then((hash) => User.create({
-          name, about, email, password: hash, avatar,
-        }))
-        .then((user) => res.send({
-          name: user.name, about: user.about, email: user.email, avatar: user.avatar,
-        }));
     })
     .catch((err) => res.status(500).send({ message: err.message }));
 };
