@@ -25,8 +25,13 @@ module.exports.removeCard = (req, res) => {
     .then((card) => {
       if (!card) {
         res.status(404).send({ message: 'no cards with this id' });
+        return;
       }
-      return Card.findByIdAndDelete(req.params.cardId)
+      if (!card.owner.equals(req.user._id)) {
+        res.status(404).send({ message: 'you can delete only yours cards' });
+        return;
+      }
+      Card.findByIdAndDelete(req.params.cardId)
         .then((cards) => res.status(200).send({ data: cards }));
     })
     .catch((err) => res.status(500).send({ message: err.message }));
