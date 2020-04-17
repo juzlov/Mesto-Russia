@@ -1,38 +1,37 @@
 const Card = require('../models/card');
+const NotFoundError = require('../errors/NotFoundError');
+const Forbidden = require('../errors/Forbidden');
 
-module.exports.getCards = (req, res) => {
+module.exports.getCards = (req, res, next) => {
   Card.find({})
     .populate('owner')
     .then((cards) => {
       if (!cards) {
-        res.status(404).send({ message: 'no cards were found' });
-        return;
+        throw new NotFoundError('no cards were found');
       }
       res.status(200).send({ data: cards });
     })
-    .catch((err) => res.status(500).send({ message: err.message }));
+    .catch(next);
 };
 
-module.exports.addCard = (req, res) => {
+module.exports.addCard = (req, res, next) => {
   const { name, link } = req.body;
   Card.create({ name, link, owner: req.user._id })
     .then((card) => res.status(200).send({ data: card }))
-    .catch((err) => res.status(500).send({ message: err.message }));
+    .catch(next);
 };
 
-module.exports.removeCard = (req, res) => {
+module.exports.removeCard = (req, res, next) => {
   Card.findById(req.params.cardId)
     .then((card) => {
       if (!card) {
-        res.status(404).send({ message: 'no cards with this id' });
-        return;
+        throw new NotFoundError('no cards with this id');
       }
       if (!card.owner.equals(req.user._id)) {
-        res.status(404).send({ message: 'you can delete only yours cards' });
-        return;
+        throw new Forbidden('you can delete only yours cards');
       }
       Card.findByIdAndDelete(req.params.cardId)
         .then((cards) => res.status(200).send({ data: cards }));
     })
-    .catch((err) => res.status(500).send({ message: err.message }));
+    .catch(next);
 };

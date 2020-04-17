@@ -4,33 +4,33 @@ require('dotenv').config();
 const { JWT_SECRET } = process.env;
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const NotFoundError = require('../errors/NotFoundError');
+const Unauthorized = require('../errors/Unauthorized')
 
 
-module.exports.getUsers = (req, res) => {
+module.exports.getUsers = (req, res, next) => {
   User.find({})
     .then((users) => {
       if (!users) {
-        res.status(404).send({ message: 'no users were found' });
-        return;
+        throw new NotFoundError('no users were found');
       }
       res.status(200).send({ data: users });
     })
-    .catch((err) => res.status(500).send({ message: err.message }));
+    .catch(next);
 };
 
-module.exports.getUserById = (req, res) => {
+module.exports.getUserById = (req, res, next) => {
   User.findById(req.params.id)
     .then((user) => {
       if (!user) {
-        res.status(404).send({ message: 'invalid id' });
-        return;
+        throw new NotFoundError('invalid id');
       }
       res.status(200).send({ data: user });
     })
-    .catch((err) => res.status(500).send({ message: err.message }));
+    .catch(next);
 };
 
-module.exports.addUser = (req, res) => {
+module.exports.addUser = (req, res, next) => {
   const {
     name, about, avatar, email, password,
   } = req.body;
@@ -39,7 +39,7 @@ module.exports.addUser = (req, res) => {
     // eslint-disable-next-line consistent-return
     .then((mail) => {
       if (mail.length !== 0) {
-        res.status(404).send({ message: 'Email already registred' });
+        throw new Unauthorized('Email already registred');
       } else {
         return bcrypt.hash(password, 10)
           .then((hash) => User.create({
@@ -50,15 +50,15 @@ module.exports.addUser = (req, res) => {
           }));
       }
     })
-    .catch((err) => res.status(500).send({ message: err.message }));
+    .catch(next);
 };
 
-module.exports.login = (req, res) => {
+module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, JWT_SECRET);
       res.cookie('jwt', token, { maxAge: 3600000 * 24 * 7, httpOnly: true }).send();
     })
-    .catch((err) => res.status(500).send({ message: err.message }));
+    .catch(next);
 };
