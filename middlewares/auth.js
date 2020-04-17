@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
   const authorization = req.cookies.jwt;
   const unauthorized = new Unauthorized('Authorization required');
   if (!authorization) {
-    return res.status(unauthorized.statusCode).send({ message: unauthorized.message });
+    return res.status(unauthorized.statusCode).send({ message: 'Необходима авторизация' });
   }
 
   let payload;
@@ -15,7 +15,7 @@ module.exports = (req, res, next) => {
   try {
     payload = jwt.verify(authorization, JWT_SECRET);
   } catch (err) {
-    return res.status(unauthorized.statusCode).send({ message: unauthorized.message });
+    return res.status(unauthorized.statusCode).send({ message: 'Ошибка авторизации' });
   }
   req.user = payload;
 
