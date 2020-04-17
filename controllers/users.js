@@ -8,7 +8,7 @@ const NotFoundError = require('../errors/NotFoundError');
 const Unauthorized = require('../errors/Unauthorized')
 
 
-module.exports.getUsers = (req, res) => {
+module.exports.getUsers = (req, res, next) => {
   User.find({})
     .then((users) => {
       if (!users) {
@@ -16,10 +16,10 @@ module.exports.getUsers = (req, res) => {
       }
       res.status(200).send({ data: users });
     })
-    .catch((err) => res.status(500).send({ message: err.message }));
+    .catch(next);
 };
 
-module.exports.getUserById = (req, res) => {
+module.exports.getUserById = (req, res, next) => {
   User.findById(req.params.id)
     .then((user) => {
       if (!user) {
@@ -27,10 +27,10 @@ module.exports.getUserById = (req, res) => {
       }
       res.status(200).send({ data: user });
     })
-    .catch((err) => res.status(500).send({ message: err.message }));
+    .catch(next);
 };
 
-module.exports.addUser = (req, res) => {
+module.exports.addUser = (req, res, next) => {
   const {
     name, about, avatar, email, password,
   } = req.body;
@@ -50,15 +50,15 @@ module.exports.addUser = (req, res) => {
           }));
       }
     })
-    .catch((err) => res.status(500).send({ message: err.message }));
+    .catch(next);
 };
 
-module.exports.login = (req, res) => {
+module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, JWT_SECRET);
       res.cookie('jwt', token, { maxAge: 3600000 * 24 * 7, httpOnly: true }).send();
     })
-    .catch((err) => res.status(500).send({ message: err.message }));
+    .catch(next);
 };
