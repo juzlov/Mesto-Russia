@@ -14,8 +14,14 @@
 ## Использованные технологии
 Node.js, Express, MongoDB
 
-## Ссылка на проект
-https://juzlov.github.io/Mesto-Russia/
+## Проект на Github
+https://github.com/juzlov/Mesto-Russia
+
+## Публичный IP-адрес сервера
+84.201.167.157
+
+## Домен
+https://mesto-project.tk/
 
 ## Как установить?
 npm version - 6.13.4
@@ -38,4 +44,4 @@ npm run dev
 
 
 ## Версия
-2.2.1
+3.0.0
