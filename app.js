@@ -9,6 +9,7 @@ const users = require('./routes/users');
 const cards = require('./routes/cards');
 const { login, addUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 
 const { PORT = 3000 } = process.env;
@@ -26,6 +27,8 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+app.use(requestLogger);
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
@@ -46,6 +49,8 @@ app.post('/signup', celebrate({
 
 app.use('/users', auth, users);
 app.use('/cards', auth, cards);
+
+app.use(errorLogger);
 
 app.use(errors());
 
