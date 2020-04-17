@@ -4,14 +4,15 @@ require('dotenv').config();
 const { JWT_SECRET } = process.env;
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const NotFoundError = require('../errors/NotFoundError');
+const Unauthorized = require('../errors/Unauthorized')
 
 
 module.exports.getUsers = (req, res) => {
   User.find({})
     .then((users) => {
       if (!users) {
-        res.status(404).send({ message: 'no users were found' });
-        return;
+        throw new NotFoundError('no users were found');
       }
       res.status(200).send({ data: users });
     })
@@ -22,8 +23,7 @@ module.exports.getUserById = (req, res) => {
   User.findById(req.params.id)
     .then((user) => {
       if (!user) {
-        res.status(404).send({ message: 'invalid id' });
-        return;
+        throw new NotFoundError('invalid id');
       }
       res.status(200).send({ data: user });
     })
@@ -39,7 +39,7 @@ module.exports.addUser = (req, res) => {
     // eslint-disable-next-line consistent-return
     .then((mail) => {
       if (mail.length !== 0) {
-        res.status(404).send({ message: 'Email already registred' });
+        throw new Unauthorized('Email already registred');
       } else {
         return bcrypt.hash(password, 10)
           .then((hash) => User.create({
