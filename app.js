@@ -3,10 +3,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const { celebrate, Joi } = require('celebrate');
+const { errors } = require('celebrate');
 const users = require('./routes/users');
 const cards = require('./routes/cards');
 const { login, addUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
+
 
 const { PORT = 3000 } = process.env;
 
@@ -24,11 +27,27 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.post('/signin', login);
-app.post('/signup', addUser);
+app.post('/signin', celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required(),
+    password: Joi.string().required(),
+  }),
+}), login);
+
+app.post('/signup', celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().required().min(2).max(30),
+    about: Joi.string().required().min(2).max(30),
+    avatar: Joi.string().required(),
+    email: Joi.string().required(),
+    password: Joi.string().required(),
+  }),
+}), addUser);
 
 app.use('/users', auth, users);
 app.use('/cards', auth, cards);
+
+app.use(errors());
 
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
