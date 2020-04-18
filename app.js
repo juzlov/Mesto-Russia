@@ -10,6 +10,7 @@ const cards = require('./routes/cards');
 const { login, addUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const router = require('./middlewares/PageNotFound');
 
 
 const { PORT = 3000 } = process.env;
@@ -57,6 +58,7 @@ app.use('/users', auth, users);
 app.use('/cards', auth, cards);
 
 app.use(errorLogger);
+app.use(router);
 
 app.use(errors());
 
