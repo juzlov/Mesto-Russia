@@ -5,7 +5,7 @@ const { JWT_SECRET } = process.env;
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
-const Unauthorized = require('../errors/Unauthorized')
+const Unauthorized = require('../errors/Unauthorized');
 
 
 module.exports.getUsers = (req, res, next) => {
