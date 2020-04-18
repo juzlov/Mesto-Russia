@@ -64,7 +64,7 @@ app.use(errors());
 
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
-  const text = (`На сервере произошла ошибка: ${message}`);
+  const text = (`Произошла ошибка: ${message}`);
 
   res
     .status(statusCode)
