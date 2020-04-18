@@ -41,7 +41,7 @@ userSchema.statics.findUserByCredentials = function loginChecking(email, passwor
   return this.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
-        return Promise.reject(new Error('Неправильные почта или пароль 1'));
+        return Promise.reject(new Error('Неправильные почта или пароль'));
       }
       return bcrypt.compare(password, user.password)
         .then((matched) => {
