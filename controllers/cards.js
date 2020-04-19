@@ -26,7 +26,7 @@ module.exports.removeCard = (req, res, next) => {
   Card.findById(req.params.cardId)
     .then((card) => {
       if (!card) {
-        throw new NotFoundError('no cards with this id');
+        throw new ReqError('no cards with this id');
       }
       if (!card.owner.equals(req.user._id)) {
         throw new Forbidden('you can delete only yours cards');

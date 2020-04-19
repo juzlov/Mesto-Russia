@@ -62,7 +62,7 @@ app.use(router);
 
 app.use(errors());
 
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   const { statusCode = 500, message } = err;
   const text = (`Произошла ошибка: ${message}`);
 
@@ -72,5 +72,6 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
+  // eslint-disable-next-line no-console
   console.log(`Server started at ${PORT}`);
 });
