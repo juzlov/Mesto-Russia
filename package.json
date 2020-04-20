@@ -1,6 +1,6 @@
 {
   "name": "mesto-russia-backend",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Developed REST API for Mesto project with connection to DB",
   "main": "app.js",
   "scripts": {
