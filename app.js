@@ -72,10 +72,7 @@ app.use(errors());
 app.use((err, req, res) => {
   const { statusCode = 500, message } = err;
   const text = (`Произошла ошибка: ${message}`);
-
-  res
-    .status(statusCode)
-    .send({ message: text });
+  res.status(statusCode).send({ message: text });
 });
 
 app.listen(PORT, () => {
