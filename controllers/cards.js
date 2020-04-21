@@ -1,6 +1,7 @@
 const Card = require('../models/card');
 const NotFoundError = require('../errors/NotFoundError');
 const Forbidden = require('../errors/Forbidden');
+const ReqError = require('../errors/ReqError');
 
 module.exports.getCards = (req, res, next) => {
   Card.find({})
@@ -25,7 +26,7 @@ module.exports.removeCard = (req, res, next) => {
   Card.findById(req.params.cardId)
     .then((card) => {
       if (!card) {
-        throw new NotFoundError('no cards with this id');
+        throw new ReqError('no cards with this id');
       }
       if (!card.owner.equals(req.user._id)) {
         throw new Forbidden('you can delete only yours cards');
