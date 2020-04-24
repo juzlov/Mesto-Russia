@@ -1,11 +1,11 @@
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
-const { JWT_SECRET } = process.env;
+const { NODE_ENV, JWT_SECRET } = process.env;
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
-const Unauthorized = require('../errors/Unauthorized')
+const Unauthorized = require('../errors/Unauthorized');
 
 
 module.exports.getUsers = (req, res, next) => {
@@ -34,30 +34,29 @@ module.exports.addUser = (req, res, next) => {
   const {
     name, about, avatar, email, password,
   } = req.body;
+  const unauthorized = new Unauthorized('');
 
-  User.find({ email })
-    // eslint-disable-next-line consistent-return
-    .then((mail) => {
-      if (mail.length !== 0) {
-        throw new Unauthorized('Email already registred');
-      } else {
-        return bcrypt.hash(password, 10)
-          .then((hash) => User.create({
-            name, about, email, password: hash, avatar,
-          }))
-          .then((user) => res.send({
-            name: user.name, about: user.about, email: user.email, avatar: user.avatar,
-          }));
+  bcrypt.hash(password, 10)
+    .then((hash) => User.create({
+      name, about, email, password: hash, avatar,
+    }))
+    .then((user) => res.send({
+      name: user.name, about: user.about, email: user.email, avatar: user.avatar,
+    }))
+    .catch((err) => {
+      if (err.code === 11000 && err.name === 'MongoError') {
+        res.status(unauthorized.statusCode).send({ message: 'Email already registred' });
       }
     })
     .catch(next);
 };
 
+
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, JWT_SECRET);
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'top-secret');
       res.cookie('jwt', token, { maxAge: 3600000 * 24 * 7, httpOnly: true }).send();
     })
     .catch(next);
